@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IAppuserDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" account != null and account != '' ">
+				AND t1.account like '%${account}%'
+			</if>
+			<if test=" nickname != null and nickname != '' ">
+				AND t1.nickname like '%${nickname}%'
+			</if>
+			<if test=" password != null and password != '' ">
+				AND t1.password = #{password}
+			</if>
+			<if test=" type != null and type != '' ">
+				AND t1.type = #{type}
+			</if>
+			<if test=" picUrl != null and picUrl != '' ">
+				AND t1.pic_url = #{picUrl}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" lastLoginTime != null and lastLoginTime != '' ">
+				AND t1.last_login_time = #{lastLoginTime}
+			</if>
+			<if test=" longitude != null and longitude != '' ">
+				AND t1.longitude = #{longitude}
+			</if>
+			<if test=" latitude != null and latitude != '' ">
+				AND t1.latitude = #{latitude}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+			<if test=" homemakingId != null and homemakingId != '' ">
+				AND t1.homemaking_id = #{homemakingId}
+			</if>
+			<if test=" userSource != null and userSource != '' ">
+				AND t1.user_source = #{userSource}
+			</if>
+			<if test=" cid != null and cid != '' ">
+				AND t1.cid = #{cid}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryAppuserPageList"  parameterType="Map" resultType="com.didi.didims.pojo.Appuser">
+		select 
+			t1.id AS id,
+			t1.account AS account,
+			t1.nickname AS nickname,
+			t1.password AS password,
+			t1.type AS type,
+			t1.pic_url AS picUrl,
+			t1.create_time AS createTime,
+			t1.last_login_time AS lastLoginTime,
+			t1.longitude AS longitude,
+			t1.latitude AS latitude,
+			t1.status AS status,
+			t1.homemaking_id AS homemakingId,
+			t1.user_source AS userSource,
+			t1.cid AS cid
+		from 
+			didi_appuser_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryAppuserPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_appuser_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryAppuserList"  parameterType="Map" resultType="com.didi.didims.pojo.Appuser">
+		select 
+			t1.id AS id,
+			t1.account AS account,
+			t1.nickname AS nickname,
+			t1.password AS password,
+			t1.type AS type,
+			t1.pic_url AS picUrl,
+			t1.create_time AS createTime,
+			t1.last_login_time AS lastLoginTime,
+			t1.longitude AS longitude,
+			t1.latitude AS latitude,
+			t1.status AS status,
+			t1.homemaking_id AS homemakingId,
+			t1.user_source AS userSource,
+			t1.cid AS cid
+		from 
+			didi_appuser_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" account != null and account != '' ">
+				AND t1.account = #{account}
+			</if>
+			<if test=" nickname != null and nickname != '' ">
+				AND t1.nickname = #{nickname}
+			</if>
+			<if test=" password != null and password != '' ">
+				AND t1.password = #{password}
+			</if>
+			<if test=" type != null and type != '' ">
+				AND t1.type = #{type}
+			</if>
+			<if test=" picUrl != null and picUrl != '' ">
+				AND t1.pic_url = #{picUrl}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" lastLoginTime != null and lastLoginTime != '' ">
+				AND t1.last_login_time = #{lastLoginTime}
+			</if>
+			<if test=" longitude != null and longitude != '' ">
+				AND t1.longitude = #{longitude}
+			</if>
+			<if test=" latitude != null and latitude != '' ">
+				AND t1.latitude = #{latitude}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+			<if test=" homemakingId != null and homemakingId != '' ">
+				AND t1.homemaking_id = #{homemakingId}
+			</if>
+			<if test=" userSource != null and userSource != '' ">
+				AND t1.user_source = #{userSource}
+			</if>
+			<if test=" cid != null and cid != '' and cid != 'isNotNull' ">
+				AND t1.cid = #{cid}
+			</if>
+			<if test=" cid != null and cid != '' and cid == 'isNotNull' ">
+				AND t1.cid is not null
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertAppuser" parameterType="com.didi.didims.pojo.Appuser">
+		insert into
+		didi_appuser_info
+		(
+				account,
+				nickname,
+				password,
+				type,
+				pic_url,
+				create_time,
+				status,
+				homemaking_id
+		)
+		values
+		(
+				#{account},
+				#{nickname},
+				#{password},
+				#{type},
+				#{picUrl},
+				#{createTime},
+				#{status},
+				#{homemakingId}
+		)
+	</insert>
+	
+	<update id="updateAppuser" parameterType="com.didi.didims.pojo.Appuser">
+		update
+			didi_appuser_info
+		set
+			account = #{account},
+			nickname = #{nickname},
+			pic_url = #{picUrl}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteAppuser" parameterType="com.didi.didims.pojo.Appuser">
+		delete from didi_appuser_info where id = #{id}
+	</delete>
+	
+	<select id="checkRepeatAccount"  parameterType="com.didi.didims.pojo.Appuser" resultType="int">
+		<![CDATA[ select count(*) from didi_appuser_info where account=#{account} and status=#{status}]]>
+		<if test=" id != null and id != '' ">
+			<![CDATA[ AND id <> #{id} ]]>
+		</if>
+	</select>
+	
+	<update id="updateStatus" parameterType="com.didi.didims.pojo.Appuser">
+		update didi_appuser_info set status=#{status} where id = #{id}
+	</update>
+</mapper>

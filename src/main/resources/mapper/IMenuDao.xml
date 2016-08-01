@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IMenuDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" code != null and code != '' ">
+				AND t1.code = #{code}
+			</if>
+			<if test=" logo != null and logo != '' ">
+				AND t1.logo = #{logo}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" path != null and path != '' ">
+				AND t1.path = #{path}
+			</if>
+			<if test=" parentId != null and parentId != '' ">
+				AND t1.parent_id = #{parentId}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryMenuPageList"  parameterType="Map" resultType="com.didi.didims.pojo.Menu">
+		select 
+			t1.id AS id,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId,
+			t1.name AS name,
+			t1.identity_code AS identityCode
+		from 
+			didi_menu_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryMenuPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_menu_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryMenuList"  parameterType="Map" resultType="com.didi.didims.pojo.Menu">
+		select 
+			t1.id AS id,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId,
+			t1.name AS name,
+			t1.identity_code AS identityCode
+		from 
+			didi_menu_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" code != null and code != '' ">
+				AND t1.code = #{code}
+			</if>
+			<if test=" logo != null and logo != '' ">
+				AND t1.logo = #{logo}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" path != null and path != '' ">
+				AND t1.path = #{path}
+			</if>
+			<if test=" parentId != null and parentId != '' ">
+				AND t1.parent_id = #{parentId}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertMenu" parameterType="com.didi.didims.pojo.Menu">
+		insert into
+		didi_menu_info
+		(
+				code,
+				logo,
+				sort,
+				path,
+				parent_id,
+				name,
+				identity_code
+		)
+		values
+		(
+				#{code},
+				#{logo},
+				#{sort},
+				#{path},
+				#{parentId},
+				#{name},
+				#{identityCode}
+		)
+	</insert>
+	
+	<update id="updateMenu" parameterType="com.didi.didims.pojo.Menu">
+		update
+			didi_menu_info
+		set
+			code = #{code},
+			logo = #{logo},
+			sort = #{sort},
+			path = #{path},
+			parent_id = #{parentId},
+			name = #{name},
+			identity_code = #{identityCode}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteMenu" parameterType="com.didi.didims.pojo.Menu">
+		delete from didi_menu_info where id = #{id}
+	</delete>
+</mapper>

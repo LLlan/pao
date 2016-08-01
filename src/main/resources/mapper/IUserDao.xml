@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IUserDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" username != null and username != '' ">
+				AND t1.username = #{username}
+			</if>
+			<if test=" password != null and password != '' ">
+				AND t1.password = #{password}
+			</if>
+			<if test=" salt != null and salt != '' ">
+				AND t1.salt = #{salt}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+			<if test=" roleId != null and roleId != '' ">
+				AND t1.role_id = #{roleId}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryUserPageList"  parameterType="Map" resultType="com.didi.didims.pojo.User">
+		select 
+			t1.id AS id,
+			t1.username AS username,
+			t1.password AS password,
+			t1.salt AS salt,
+			t1.identity_code AS identityCode,
+			t1.role_id AS roleId,
+			t1.homemaking_id AS homemakingId
+		from 
+			didi_user_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryUserPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_user_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryUserList"  parameterType="Map" resultType="com.didi.didims.pojo.User">
+		select 
+			t1.id AS id,
+			t1.username AS username,
+			t1.password AS password,
+			t1.salt AS salt,
+			t1.identity_code AS identityCode,
+			t1.role_id AS roleId,
+			t1.homemaking_id AS homemakingId
+		from 
+			didi_user_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" username != null and username != '' ">
+				AND t1.username = #{username}
+			</if>
+			<if test=" password != null and password != '' ">
+				AND t1.password = #{password}
+			</if>
+			<if test=" salt != null and salt != '' ">
+				AND t1.salt = #{salt}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+			<if test=" roleId != null and roleId != '' ">
+				AND t1.role_id = #{roleId}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertUser" parameterType="com.didi.didims.pojo.User">
+		insert into didi_user_info
+		(
+				username,
+				password,
+				salt,
+				identity_code,
+				role_id,
+				homemaking_id
+		)
+		values
+		(
+				#{username},
+				#{password},
+				#{salt},
+				#{identityCode},
+				#{roleId},
+				#{homemakingId}
+		)
+	</insert>
+	
+	<update id="updateUser" parameterType="com.didi.didims.pojo.User">
+		update
+			didi_user_info
+		set
+			password = #{password},
+			role_id = #{roleId}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.didi.didims.pojo.User">
+		delete from didi_user_info where id = #{id}
+	</delete>
+</mapper>

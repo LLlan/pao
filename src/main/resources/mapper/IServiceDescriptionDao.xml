@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IServiceDescriptionDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" description != null and description != '' ">
+				AND t1.description = #{description}
+			</if>
+			<if test=" remarks != null and remarks != '' ">
+				AND t1.remarks = #{remarks}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryServiceDescriptionPageList"  parameterType="Map" resultType="com.didi.didims.pojo.ServiceDescription">
+		select 
+			t1.id AS id,
+			t1.service_type_id AS serviceTypeId,
+			t1.description AS description,
+			t1.remarks AS remarks,
+			t1.sort AS sort,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status
+		from 
+			didi_service_description t1
+		<include refid="pageWhere"></include>
+		order by t1.sort
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryServiceDescriptionPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_service_description t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryServiceDescriptionList"  parameterType="Map" resultType="com.didi.didims.pojo.ServiceDescription">
+		select 
+			t1.id AS id,
+			t1.service_type_id AS serviceTypeId,
+			t1.description AS description,
+			t1.remarks AS remarks,
+			t1.sort AS sort,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status
+		from 
+			didi_service_description t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" description != null and description != '' ">
+				AND t1.description = #{description}
+			</if>
+			<if test=" remarks != null and remarks != '' ">
+				AND t1.remarks = #{remarks}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+		order by sort
+	</select>
+	
+	<insert id="insertServiceDescription" parameterType="com.didi.didims.pojo.ServiceDescription">
+		insert into
+		didi_service_description
+		(
+				service_type_id,
+				description,
+				remarks,
+				sort,
+				create_time,
+				create_user,
+				status
+		)
+		values
+		(
+				#{serviceTypeId},
+				#{description},
+				#{remarks},
+				#{sort},
+				#{createTime},
+				#{createUser},
+				#{status}
+		)
+	</insert>
+	
+	<update id="updateServiceDescription" parameterType="com.didi.didims.pojo.ServiceDescription">
+		update
+			didi_service_description
+		set
+			description = #{description},
+			remarks = #{remarks},
+			sort = #{sort},
+			update_time = #{updateTime},
+			update_user = #{updateUser}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteServiceDescription" parameterType="com.didi.didims.pojo.ServiceDescription">
+		delete from didi_service_description where id = #{id}
+	</delete>
+</mapper>

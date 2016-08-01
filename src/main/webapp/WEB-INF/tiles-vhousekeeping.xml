@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="vhousekeeping.login.base.definition"
+		template="/WEB-INF/page/base/vhousekeeping/login-layout.jsp">
+		<put-attribute name="title" value="基础服务管理系统" />
+		<put-attribute name="css-js"  value="/WEB-INF/page/base/vhousekeeping/css-js.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/page/base/vhousekeeping/footer.jsp" />
+	</definition>
+
+	<definition name="vhousekeeping.login" extends="vhousekeeping.login.base.definition">
+		<put-attribute name="title" value="商家服务平台-登录" />
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/login.jsp" />
+	</definition>
+
+	<!-- 商家端基础模板 -->
+	<definition name="vhousekeeping.base.definition" template="/WEB-INF/page/base/vhousekeeping/layout.jsp">
+		<put-attribute name="title" value="商家服务平台" />
+		<put-attribute name="css-js" value="/WEB-INF/page/base/vhousekeeping/css-js.jsp" />
+		<put-attribute name="header" value="/WEB-INF/page/base/vhousekeeping/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/page/base/vhousekeeping/menu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/page/base/vhousekeeping/footer.jsp" />
+	</definition>
+
+	<!-- 分页模版 -->
+	<definition name="vhousekeeping.base.page.definition" template="/WEB-INF/page/base/vhousekeeping/pager.jsp">
+	</definition>
+
+	<definition name="vhousekeeping.index" extends="vhousekeeping.base.definition">
+		<put-attribute name="title" value="商家服务平台" />
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/index.jsp" />
+	</definition>
+
+	<!-- 服务分类管理  -->
+	<definition name="vhousekeeping.homemakingServiceManage.list" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/homemakingServiceManage/list.jsp" />
+	</definition>
+	<definition name="vhousekeeping.homemakingServiceManage.add" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/homemakingServiceManage/add.jsp" />
+	</definition>
+	<!-- 服务分类价格 -->
+	<definition name="vhousekeeping.homemakingPriceManage.list" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/homemakingPriceManage/list.jsp" />
+	</definition>
+	<definition name="vhousekeeping.homemakingPriceManage.edit" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/homemakingPriceManage/edit.jsp" />
+	</definition>
+	<!-- 人员信息 -->
+	<definition name="vhousekeeping.appuserManage.list" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/appuserManage/list.jsp" />
+	</definition>
+	<definition name="vhousekeeping.appuserManage.add" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/appuserManage/add.jsp" />
+	</definition>
+	<definition name="vhousekeeping.appuserManage.edit" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/appuserManage/edit.jsp" />
+	</definition>
+	<!-- 人员服务项 -->
+	<definition name="vhousekeeping.appuserServiceRecManage.list" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/appuserServiceRecManage/list.jsp" />
+	</definition>
+	<definition name="vhousekeeping.appuserServiceRecManage.add" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/appuserServiceRecManage/add.jsp" />
+	</definition>
+	<!-- 订单信息 -->
+	<definition name="vhousekeeping.orderManage.list" extends="vhousekeeping.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vhousekeeping/orderManage/list.jsp" />
+	</definition>
+	
+</tiles-definitions>

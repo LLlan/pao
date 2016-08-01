@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IOrderDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" orderNo != null and orderNo != '' ">
+				AND t1.order_no = #{orderNo}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" serviceType != null and serviceType != '' ">
+				AND t1.service_type = #{serviceType}
+			</if>
+			<if test=" posLongitude != null and posLongitude != '' ">
+				AND t1.pos_longitude = #{posLongitude}
+			</if>
+			<if test=" posLatitude != null and posLatitude != '' ">
+				AND t1.pos_latitude = #{posLatitude}
+			</if>
+			<if test=" serviceTime != null and serviceTime != '' ">
+				AND t1.service_time = #{serviceTime}
+			</if>
+			<if test=" telephone != null and telephone != '' ">
+				AND t1.telephone = #{telephone}
+			</if>
+			<if test=" serviceAddress != null and serviceAddress != '' ">
+				AND t1.service_address = #{serviceAddress}
+			</if>
+			<if test=" qualificationsLevel != null and qualificationsLevel != '' ">
+				AND t1.qualifications_level = #{qualificationsLevel}
+			</if>
+			<if test=" isPayFee != null and isPayFee != '' ">
+				AND t1.is_pay_fee = #{isPayFee}
+			</if>
+			<if test=" remark != null and remark != '' ">
+				AND t1.remark = #{remark}
+			</if>
+			<if test=" serviceStartTime != null and serviceStartTime != '' ">
+				AND t1.service_start_time = #{serviceStartTime}
+			</if>
+			<if test=" serviceEndTime != null and serviceEndTime != '' ">
+				AND t1.service_end_time = #{serviceEndTime}
+			</if>
+			<if test=" serviceTimeScope != null and serviceTimeScope != '' ">
+				AND t1.service_time_scope = #{serviceTimeScope}
+			</if>
+			<if test=" cancleOrderReason != null and cancleOrderReason != '' ">
+				AND t1.cancle_order_reason = #{cancleOrderReason}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryOrderPageList"  parameterType="Map" resultType="com.didi.didims.pojo.Order">
+		select 
+			t1.id AS id,
+			t1.order_no AS orderNo,
+			t1.status AS status,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.service_type AS serviceType,
+			t1.pos_longitude AS posLongitude,
+			t1.pos_latitude AS posLatitude,
+			t1.service_time AS serviceTime,
+			t1.telephone AS telephone,
+			t1.service_address AS serviceAddress,
+			t1.qualifications_level AS qualificationsLevel,
+			t1.is_pay_fee AS isPayFee,
+			t1.remark AS remark,
+			t1.service_start_time AS serviceStartTime,
+			t1.service_end_time AS serviceEndTime,
+			t1.service_time_scope AS serviceTimeScope,
+			t1.cancle_order_reason AS cancleOrderReason,
+			t3.homemaking_id AS homemakingId,
+			t4.type_name AS serviceTypeName,
+			t2.service_user_id AS serviceUserId,
+			t3.nickname AS serviceUserName
+		from 
+			didi_order_info t1,
+			didi_order_grab_info t2,
+			didi_appuser_info t3,
+			didi_service_type_info t4
+		where 
+			t1.id = t2.order_id and t2.service_user_id = t3.id and t1.service_type = t4.id
+			and t2.status=1 and t3.homemaking_id=#{homemakingId} 
+			<if test=" serviceUserName != null and serviceUserName != '' ">
+				AND t3.nickname like '%${serviceUserName}%'
+			</if>
+			<if test=" serviceType != null and serviceType != '' ">
+				AND t1.service_type = #{serviceType}
+			</if>
+			<if test=" cTime1 != null and cTime1 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{cTime1}, '%Y-%m-%d')  ]]>
+			</if>
+			<if test=" cTime2 != null and cTime2 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{cTime2}, '%Y-%m-%d') ]]>
+			</if>
+		order by t1.id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryOrderPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_order_info t1,
+			didi_order_grab_info t2,
+			didi_appuser_info t3,
+			didi_service_type_info t4
+		where 
+			t1.id = t2.order_id and t2.service_user_id = t3.id and t1.service_type = t4.id
+			and t2.status=1 and t3.homemaking_id=#{homemakingId} 
+			<if test=" serviceUserName != null and serviceUserName != '' ">
+				AND t3.nickname like '%${serviceUserName}%'
+			</if>
+			<if test=" serviceType != null and serviceType != '' ">
+				AND t1.service_type = #{serviceType}
+			</if>
+			<if test=" cTime1 != null and cTime1 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{cTime1}, '%Y-%m-%d')  ]]>
+			</if>
+			<if test=" cTime2 != null and cTime2 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{cTime2}, '%Y-%m-%d') ]]>
+			</if>
+	</select>
+	
+	<select id="queryOrderList"  parameterType="Map" resultType="com.didi.didims.pojo.Order">
+		select 
+			t1.id AS id,
+			t1.order_no AS orderNo,
+			t1.status AS status,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.service_type AS serviceType,
+			t1.pos_longitude AS posLongitude,
+			t1.pos_latitude AS posLatitude,
+			t1.service_time AS serviceTime,
+			t1.telephone AS telephone,
+			t1.service_address AS serviceAddress,
+			t1.qualifications_level AS qualificationsLevel,
+			t1.is_pay_fee AS isPayFee,
+			t1.remark AS remark,
+			t1.service_start_time AS serviceStartTime,
+			t1.service_end_time AS serviceEndTime,
+			t1.service_time_scope AS serviceTimeScope,
+			t1.cancle_order_reason AS cancleOrderReason
+		from 
+			didi_order_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" orderNo != null and orderNo != '' ">
+				AND t1.order_no = #{orderNo}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" serviceType != null and serviceType != '' ">
+				AND t1.service_type = #{serviceType}
+			</if>
+			<if test=" posLongitude != null and posLongitude != '' ">
+				AND t1.pos_longitude = #{posLongitude}
+			</if>
+			<if test=" posLatitude != null and posLatitude != '' ">
+				AND t1.pos_latitude = #{posLatitude}
+			</if>
+			<if test=" serviceTime != null and serviceTime != '' ">
+				AND t1.service_time = #{serviceTime}
+			</if>
+			<if test=" telephone != null and telephone != '' ">
+				AND t1.telephone = #{telephone}
+			</if>
+			<if test=" serviceAddress != null and serviceAddress != '' ">
+				AND t1.service_address = #{serviceAddress}
+			</if>
+			<if test=" qualificationsLevel != null and qualificationsLevel != '' ">
+				AND t1.qualifications_level = #{qualificationsLevel}
+			</if>
+			<if test=" isPayFee != null and isPayFee != '' ">
+				AND t1.is_pay_fee = #{isPayFee}
+			</if>
+			<if test=" remark != null and remark != '' ">
+				AND t1.remark = #{remark}
+			</if>
+			<if test=" serviceStartTime != null and serviceStartTime != '' ">
+				AND t1.service_start_time = #{serviceStartTime}
+			</if>
+			<if test=" serviceEndTime != null and serviceEndTime != '' ">
+				AND t1.service_end_time = #{serviceEndTime}
+			</if>
+			<if test=" serviceTimeScope != null and serviceTimeScope != '' ">
+				AND t1.service_time_scope = #{serviceTimeScope}
+			</if>
+			<if test=" cancleOrderReason != null and cancleOrderReason != '' ">
+				AND t1.cancle_order_reason = #{cancleOrderReason}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertOrder" parameterType="com.didi.didims.pojo.Order">
+		insert into
+		didi_order_info
+		(
+				order_no,
+				status,
+				create_time,
+				create_user,
+				service_type,
+				pos_longitude,
+				pos_latitude,
+				service_time,
+				telephone,
+				service_address,
+				qualifications_level,
+				is_pay_fee,
+				remark,
+				service_start_time,
+				service_end_time,
+				service_time_scope,
+				cancle_order_reason
+		)
+		values
+		(
+				#{orderNo},
+				#{status},
+				#{createTime},
+				#{createUser},
+				#{serviceType},
+				#{posLongitude},
+				#{posLatitude},
+				#{serviceTime},
+				#{telephone},
+				#{serviceAddress},
+				#{qualificationsLevel},
+				#{isPayFee},
+				#{remark},
+				#{serviceStartTime},
+				#{serviceEndTime},
+				#{serviceTimeScope},
+				#{cancleOrderReason}
+		)
+	</insert>
+	
+	<update id="updateOrder" parameterType="com.didi.didims.pojo.Order">
+		update
+			didi_order_info
+		set
+			order_no = #{orderNo},
+			status = #{status},
+			create_time = #{createTime},
+			create_user = #{createUser},
+			service_type = #{serviceType},
+			pos_longitude = #{posLongitude},
+			pos_latitude = #{posLatitude},
+			service_time = #{serviceTime},
+			telephone = #{telephone},
+			service_address = #{serviceAddress},
+			qualifications_level = #{qualificationsLevel},
+			is_pay_fee = #{isPayFee},
+			remark = #{remark},
+			service_start_time = #{serviceStartTime},
+			service_end_time = #{serviceEndTime},
+			service_time_scope = #{serviceTimeScope},
+			cancle_order_reason = #{cancleOrderReason}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteOrder" parameterType="com.didi.didims.pojo.Order">
+		delete from didi_order_info where id = #{id}
+	</delete>
+</mapper>

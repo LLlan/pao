@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IPermissionDao">
+
+ 	<resultMap type="com.didi.didims.pojo.Menu" id="Menu"> 
+ 		<result column="id"  property="id"/> 
+ 		<result column="name"  property="name"/> 
+ 		<result column="code"  property="code"/> 
+ 		<result column="logo"  property="logo"/> 
+ 		<result column="sort"  property="sort"/> 
+ 		<result column="path"  property="path"/> 
+ 		<result column="parentId"  property="parentId"/> 
+ 		<result column="identityCode"  property="identityCode"/> 
+ 		<collection property="subMenu" ofType="Menu" column="id" select="querySubMenuPermissions"></collection> 
+ 		<collection property="functions" ofType="Function" column="id" select="queryFunctions"></collection> 
+ 	</resultMap> 
+ 	
+ 	<resultMap type="com.didi.didims.pojo.Function" id="Function">
+		<result column="id"  property="id"/>
+		<result column="name"  property="name"/>
+		<result column="code"  property="code"/>
+		<result column="sort"  property="sort"/>
+		<result column="menuFunctionId"  property="menuFunctionId"/>
+	</resultMap>
+	<!-- 树 start -->
+	<select id="queryAllMenuPermissions" parameterType="Map" resultMap="Menu">
+		select 
+			t1.id AS id,
+			t1.name,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId,
+			t1.identity_code as identityCode
+		from 
+			didi_menu_info t1
+		where
+			t1.parent_id is null
+		and t1.identity_code = #{identityCode}
+		order by sort
+	</select>
+
+	<select id="querySubMenuPermissions" parameterType="int" resultMap="Menu">
+		select 
+			t1.id AS id,
+			t1.name,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId
+		from 
+			didi_menu_info t1
+		where
+			t1.parent_id = #{id}
+		order by sort
+	</select>
+	
+	<select id="queryFunctions" parameterType="int" resultMap="Function">
+		select 
+			t1.id,
+			t1.name,
+			t1.code,
+			t1.sort,
+			t2.id as menuFunctionId
+		from 
+			didi_function_info t1,
+			didi_menu_function_rec t2
+		where
+			t1.id = t2.function_id
+		and	t2.menu_id = #{id}
+		order by sort
+	</select>
+	<!-- 树 end -->
+	<select id="queryPermissions" parameterType="Map" resultType="Map">
+		select
+			t1.id as menuFunctionId,
+			t2.id as menuId,
+			t2.name as menuName,
+			t2.code as menuCode,
+			t2.path,
+			t3.code as functionCode,
+			t3.name as functionName,
+			CONCAT(t2.path, '/', t3.code) AS url,
+			CONCAT(t2.code, ':', t3.code) AS permissionCode
+		from
+			didi_menu_function_rec t1
+		left join
+			didi_menu_info t2
+		on t1.menu_id = t2.id
+		left join 
+			didi_function_info t3
+		on t1.function_id = t3.id
+	</select>
+	
+	<select id="login" parameterType="Map" resultType="com.didi.didims.pojo.User">
+		select 
+			t1.id,
+			t1.username,
+			t1.password,
+			t1.salt,
+			t1.identity_code as identityCode,
+			t1.role_id as roleId,
+			t1.homemaking_id as homemakingId
+		from 
+			didi_user_info t1
+		where username = #{username}
+		and t1.identity_code = #{identityCode}
+	</select>
+	
+	<select id="queryMenuByUser" parameterType="Map" resultType="com.didi.didims.pojo.Menu">
+		select 
+			t1.id AS id,
+			t1.name,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId,
+			t1.identity_code as identityCode
+		from 
+			didi_menu_info t1
+		where
+			t1.parent_id is null
+		and t1.id in (select dmi.parent_id from didi_role_menu_function_rec drmfr , didi_menu_function_rec dmfr, didi_menu_info dmi WHERE drmfr.menu_function_id = dmfr.id  AND dmi.id = dmfr.menu_id and drmfr.role_id = #{roleId})
+	</select>
+	
+	<select id="querySubMenuByUser" parameterType="Map" resultType="com.didi.didims.pojo.Menu">
+		select 
+			t1.id AS id,
+			t1.name,
+			t1.code AS code,
+			t1.logo AS logo,
+			t1.sort AS sort,
+			t1.path AS path,
+			t1.parent_id AS parentId,
+			t1.identity_code as identityCode
+		from 
+			didi_menu_info t1
+		where
+		t1.parent_id = #{parentId}
+		and t1.id in (select dmfr.menu_id from didi_role_menu_function_rec drmfr , didi_menu_function_rec dmfr where drmfr.menu_function_id = dmfr.id and drmfr.role_id = #{roleId})
+	</select>
+	
+	<select id="queryPermissionsByRole" parameterType="Map" resultType="Map">
+		select
+			t1.id as menuFunctionId,
+			t2.id as menuId,
+			t2.name as menuName,
+			t2.code as menuCode,
+			t2.path,
+			t3.code as functionCode,
+			t3.name as functionName,
+			CONCAT(t2.path, '/', t3.code) AS url,
+			CONCAT(t2.code, ':', t3.code) AS permissionCode,
+			CONCAT(t2.struct, '/', t2.code) as struct
+		from
+			didi_role_menu_function_rec t4
+		left join
+			didi_menu_function_rec t1
+		on menu_function_id = t1.id
+		left join
+			didi_menu_info t2
+		on t1.menu_id = t2.id
+		left join 
+			didi_function_info t3
+		on t1.function_id = t3.id
+		where
+			t4.role_id = #{id}
+	</select>
+	
+	<update id="updateUserPassword" parameterType="Map">
+		update
+			didi_user_info
+		set
+			password = #{newPassword}
+		where
+			id = #{userId}
+	</update>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IAppVersionDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" versionNumber != null and versionNumber != '' ">
+				AND t1.version_number = #{versionNumber}
+			</if>
+			<if test=" category != null and category != '' ">
+				AND t1.category = #{category}
+			</if>
+			<if test=" type != null and type != '' ">
+				AND t1.type = #{type}
+			</if>
+			<if test=" filePath != null and filePath != '' ">
+				AND t1.file_path = #{filePath}
+			</if>
+			<if test=" updateLog != null and updateLog != '' ">
+				AND t1.update_log = #{updateLog}
+			</if>
+			<if test=" updateInstall != null and updateInstall != '' ">
+				AND t1.update_install = #{updateInstall}
+			</if>
+			<if test=" isShow != null and isShow != '' ">
+				AND t1.is_show = #{isShow}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" fileName != null and fileName != '' ">
+				AND t1.file_name = #{fileName}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryAppVersionPageList"  parameterType="Map" resultType="com.didi.didims.pojo.AppVersion">
+		select 
+			t1.id AS id,
+			t1.version_number AS versionNumber,
+			t1.category AS category,
+			t1.type AS type,
+			t1.file_path AS filePath,
+			t1.update_log AS updateLog,
+			t1.update_install AS updateInstall,
+			t1.is_show AS isShow,
+			t1.update_time AS updateTime,
+			t1.file_name AS fileName
+		from 
+			didi_app_version_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryAppVersionPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_app_version_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryAppVersionList"  parameterType="Map" resultType="com.didi.didims.pojo.AppVersion">
+		select 
+			t1.id AS id,
+			t1.version_number AS versionNumber,
+			t1.category AS category,
+			t1.type AS type,
+			t1.file_path AS filePath,
+			t1.update_log AS updateLog,
+			t1.update_install AS updateInstall,
+			t1.is_show AS isShow,
+			t1.update_time AS updateTime,
+			t1.file_name AS fileName
+		from 
+			didi_app_version_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" versionNumber != null and versionNumber != '' ">
+				AND t1.version_number = #{versionNumber}
+			</if>
+			<if test=" category != null and category != '' ">
+				AND t1.category = #{category}
+			</if>
+			<if test=" type != null and type != '' ">
+				AND t1.type = #{type}
+			</if>
+			<if test=" filePath != null and filePath != '' ">
+				AND t1.file_path = #{filePath}
+			</if>
+			<if test=" updateLog != null and updateLog != '' ">
+				AND t1.update_log = #{updateLog}
+			</if>
+			<if test=" updateInstall != null and updateInstall != '' ">
+				AND t1.update_install = #{updateInstall}
+			</if>
+			<if test=" isShow != null and isShow != '' ">
+				AND t1.is_show = #{isShow}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" fileName != null and fileName != '' ">
+				AND t1.file_name = #{fileName}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertAppVersion" parameterType="com.didi.didims.pojo.AppVersion">
+		insert into
+		didi_app_version_info
+		(
+				version_number,
+				category,
+				type,
+				file_path,
+				update_log,
+				update_install,
+				is_show,
+				update_time,
+				file_name
+		)
+		values
+		(
+				#{versionNumber},
+				#{category},
+				#{type},
+				#{filePath},
+				#{updateLog},
+				#{updateInstall},
+				#{isShow},
+				#{updateTime},
+				#{fileName}
+		)
+	</insert>
+	
+	<update id="updateAppVersion" parameterType="com.didi.didims.pojo.AppVersion">
+		update
+			didi_app_version_info
+		set
+			version_number = #{versionNumber},
+			category = #{category},
+			type = #{type},
+			<if test=" filePath != null and filePath != ''">
+				file_path = #{filePath},
+			</if>
+			update_log = #{updateLog},
+			update_install = #{updateInstall},
+			is_show = #{isShow},
+			update_time = #{updateTime},
+			file_name = #{fileName}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteAppVersion" parameterType="com.didi.didims.pojo.AppVersion">
+		delete from didi_app_version_info where id = #{id}
+	</delete>
+</mapper>

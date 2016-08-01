@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="vmanage.login.base.definition" template="/WEB-INF/page/base/vmanage/login-layout.jsp">
+		<put-attribute name="title" value="基础服务管理系统" />
+		<put-attribute name="css-js" value="/WEB-INF/page/base/vmanage/css-js.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/page/base/vmanage/footer.jsp" />
+	</definition>
+	
+	<definition name="vmanage.login" extends="vmanage.login.base.definition">
+		<put-attribute name="title" value="智能运营平台-登录" />
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/login.jsp" />
+	</definition>
+	
+	<definition name="vmanage.base.definition" template="/WEB-INF/page/base/vmanage/layout.jsp">
+		<put-attribute name="title" value="智能运营平台" />
+		<put-attribute name="css-js" value="/WEB-INF/page/base/vmanage/css-js.jsp" />
+		<put-attribute name="header" value="/WEB-INF/page/base/vmanage/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/page/base/vmanage/footer.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/page/base/vmanage/menu.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+	
+	<definition name="vmanage.base.page" template="/WEB-INF/page/base/vmanage/pager.jsp">
+	</definition>
+	
+	<definition name="vmanage.index" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/index.jsp" />
+	</definition>
+	
+	<!-- 角色管理  -->
+	<definition name="vmanage.roleManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/roleManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.roleManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/roleManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.roleManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/roleManage/edit.jsp" />
+	</definition>
+	
+	<!-- 管理员管理  -->
+	<definition name="vmanage.userManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/userManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.userManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/userManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.userManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/userManage/edit.jsp" />
+	</definition>
+	
+	<!-- 服务分类管理  -->
+	<definition name="vmanage.serviceTypeManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceTypeManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.serviceTypeManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceTypeManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.serviceTypeManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceTypeManage/edit.jsp" />
+	</definition>
+	<!-- 服务描述 -->
+	<definition name="vmanage.serviceDescriptionManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceDescriptionManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.serviceDescriptionManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceDescriptionManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.serviceDescriptionManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/serviceDescriptionManage/edit.jsp" />
+	</definition>
+	
+	<!-- 家政公司管理  -->
+	<definition name="vmanage.homemakingManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/homemakingManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.homemakingManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/homemakingManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.homemakingManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/homemakingManage/edit.jsp" />
+	</definition>
+	
+	<!-- 版本管理  -->
+	<definition name="vmanage.appVersionManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/appVersionManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.appVersionManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/appVersionManage/add.jsp" />
+	</definition>
+	<definition name="vmanage.appVersionManage.edit" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/appVersionManage/edit.jsp" />
+	</definition>
+	
+	<!-- 意见反馈 -->
+	<definition name="vmanage.opinionManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/opinionManage/list.jsp" />
+	</definition>
+	
+	<!-- 系统通知-->
+	<definition name="vmanage.systemMessageManage.list" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/systemMessageManage/list.jsp" />
+	</definition>
+	<definition name="vmanage.systemMessageManage.add" extends="vmanage.base.definition">
+		<put-attribute name="body" value="/WEB-INF/page/vmanage/systemMessageManage/add.jsp" />
+	</definition>
+	
+</tiles-definitions>

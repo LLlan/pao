@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+
+
+<title>智慧社区下载页面</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+  <div id="open" class="cover" onClick="document.getElementById('open').style.display='none';document.body.style.overflow ='scroll';">
+    <div class="row">
+              <div class="col-xs-2 col-sm-2 col-sm-offset-9 col-xs-offset-9">
+                 <img src="images/arrow.png" >
+              </div>
+    </div>
+    
+    <div class="row"> 
+          <img src="images/tip.png">
+     </div>
+     
+  
+  
+  </div>
+
+
+  <div class="container downloadbox">
+         <div class="row word">
+              <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+                 <img src="images/tittle.png">
+              </div>
+         </div>
+       
+       
+        <div class="row"> 
+            <p class="col-xs-10 col-xs-offset-1">&nbsp;&nbsp;&nbsp;&nbsp;为广大房地产、物业等公司转型拓展O2O智慧生活服务提供解决方案，为专业生活服务公司提供智慧入口解决方案，打
+            开智慧生活的大门。</p>
+         </div>
+            
+            
+        <div class="row">
+            <p class="col-xs-10 col-xs-offset-1">&nbsp;&nbsp;&nbsp;&nbsp;为物业管理企业及地产公司建设自己的小区增值平台，并在提供IT支持的基础上为物业公司引入第三方增值商业资源。</p>
+        </div>
+       
+       
+       
+       
+       <div class="row button">
+           <div class="col-xs-12 col-sm-4 col-sm-offset-4 anniu" onClick="is_weixin()"><img src="images/and.png"></div>
+       </div>
+       
+       
+       
+       <div class="row phone">
+             <div class="col-xs-12  col-sm-6 col-sm-offset-3">
+                 <img src="images/phone.png">
+             </div>
+       </div>
+       
+       
+ </div>
+
+
+
+
+<!-----------------------判断是否为微信------------------------------->
+<script type="text/javascript">
+
+  function is_weixin(){  
+   
+    var ua = navigator.userAgent.toLowerCase();  
+	var target=document.getElementById("open");
+	
+	
+    if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+        
+       target.style.display ="block";
+       document.body.style.overflow ="hidden";
+     
+     
+	   return true;  
+    } else {  
+	    
+	  
+		//这里放下载页地址
+		alert("判断为非微信内嵌浏览器，跳转到下载页面")
+		
+		
+	   return false;  
+    }  
+  }  
+
+
+  
+
+
+
+
+</script>
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

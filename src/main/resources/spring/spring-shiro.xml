@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="  
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="serviceDeskRealm" />
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+
+	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
+	</bean>
+
+	<!-- -->
+	<bean id="serviceDeskRealm" class="com.didi.didims.shiro.realm.ServiceDeskRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
+		<property name="cachingEnabled" value="true" />
+<!-- 		<property name="authenticationCachingEnabled" value="true" /> -->
+<!-- 		<property name="authenticationCacheName" value="authenticationCache" /> -->
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
+	</bean>
+
+	<!-- 配置shiro的过滤器工厂类，id- shiroFilter要和我们在web.xml中配置的过滤器一致 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/vmanage/loginManage/goLogin" />
+		<property name="successUrl" value="" />
+		<property name="unauthorizedUrl" value="/errorManage/unauthorized" />
+		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource"></property>
+		<property name="filters">
+			<map>
+				<entry key="authc" value-ref="formAuthenticationFilter"></entry>
+				<entry key="loginOut" value-ref="loginOutFilter"></entry>
+				<entry key="perms" value-ref="permissionsAuthorizationFilter"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 登出过滤器 -->
+	<bean id="loginOutFilter" class="com.didi.didims.shiro.filter.LoginOutFilter">
+		<property name="loginUrl" value="/vmanage/loginManage/goLogin" />
+	</bean>
+
+	<!-- authc filter -->
+	<bean id="formAuthenticationFilter" class="com.didi.didims.shiro.filter.FormAuthenticationFilter">
+	</bean>
+
+	<!-- perms filter -->
+	<bean id="permissionsAuthorizationFilter"
+		class="com.didi.didims.shiro.filter.PermissionsAuthorizationFilter">
+	</bean>
+
+	<!-- 动态拦截URL配置 -->
+	<bean id="chainDefinitionSectionMetaSource"
+		class="com.didi.didims.shiro.bean.ChainDefinitionSectionMetaSource">
+		<property name="filterChainDefinitions">
+			<value>
+				/resource/** = anon
+				/assets/** = anon
+				/css/** = anon
+				/img/** = anon
+				/js/** = anon
+				/plugin/** = anon
+				/themes/** = anon
+				/vmanage/loginManage/login = anon
+				/vmanage/loginManage/goLogin = anon
+				/vhousekeeping/loginManage/login = anon
+				/vhousekeeping/loginManage/goLogin = anon
+				/shiro/errorManage/** = anon
+				/vapp/uploadHandler/** = anon
+				/vapp/fileHandler/** = anon
+				/vapp/downloadHandler/** = anon
+				/loginOut/** = authc, loginOut
+			</value>
+		</property>
+	</bean>
+
+	<!-- 生命周期管理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- 凭证处理器 -->
+	<bean id="credentialsMatcher"
+		class="com.didi.didims.shiro.matcher.RetryLimitHashedCredentialsMatcher">
+		<!-- hashAlgorithmName必须的，没有默认值。可以有MD5或者SHA-1，如果对密码安全有更高要求可以用SHA-256或者更高。 
+			这里使用MD5 storedCredentialsHexEncoded默认是true，此时用的是密码加密用的是Hex编码；false时用Base64编码 
+			hashIterations迭代次数，默认值是1。 -->
+		<constructor-arg ref="cacheManager" />
+		<property name="hashAlgorithmName" value="md5" />
+		<property name="hashIterations" value="2" />
+		<property name="storedCredentialsHexEncoded" value="true" />
+	</bean>
+
+	<!-- 缓存管理器 -->
+	<bean id="cacheManager" class="com.didi.didims.shiro.cache.J2CacheManager">
+	</bean>
+
+	<!-- 会话ID生成器 -->
+	<bean id="sessionIdGenerator"
+		class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+
+	<!-- 会话Cookie模板 -->
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="sid" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="-1" />
+	</bean>
+
+	<!-- 记住我Cookie模板 -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="2592000" /><!-- 30天 -->
+	</bean>
+
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位） -->
+		<property name="cipherKey"
+			value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean>
+
+	<!-- 会话DAO -->
+	<bean id="sessionDAO"
+		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<!-- <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/> -->
+		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
+	</bean>
+
+	<!-- 会话验证调度器 -->
+	<bean id="sessionValidationScheduler"
+		class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+		<property name="interval" value="1800000" />
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+
+	<!-- 会话管理器 -->
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="globalSessionTimeout" value="1800000" />
+		<property name="deleteInvalidSessions" value="true" />
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+
+</beans>  
