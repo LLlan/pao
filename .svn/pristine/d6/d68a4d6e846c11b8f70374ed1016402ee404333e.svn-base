@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IFunctionDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" code != null and code != '' ">
+				AND t1.code = #{code}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryFunctionPageList"  parameterType="Map" resultType="com.didi.didims.pojo.Function">
+		select 
+			t1.id AS id,
+			t1.name AS name,
+			t1.code AS code,
+			t1.sort AS sort
+		from 
+			didi_function_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryFunctionPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_function_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryFunctionList"  parameterType="Map" resultType="com.didi.didims.pojo.Function">
+		select 
+			t1.id AS id,
+			t1.name AS name,
+			t1.code AS code,
+			t1.sort AS sort
+		from 
+			didi_function_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" code != null and code != '' ">
+				AND t1.code = #{code}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertFunction" parameterType="com.didi.didims.pojo.Function">
+		insert into
+		didi_function_info
+		(
+				name,
+				code,
+				sort
+		)
+		values
+		(
+				#{name},
+				#{code},
+				#{sort}
+		)
+	</insert>
+	
+	<update id="updateFunction" parameterType="com.didi.didims.pojo.Function">
+		update
+			didi_function_info
+		set
+			name = #{name},
+			code = #{code},
+			sort = #{sort}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteFunction" parameterType="com.didi.didims.pojo.Function">
+		delete from didi_function_info where id = #{id}
+	</delete>
+</mapper>

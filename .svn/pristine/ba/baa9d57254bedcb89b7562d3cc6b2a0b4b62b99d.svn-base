@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IAppuserServiceRecDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" appuserId != null and appuserId != '' ">
+				AND t1.appuser_id = #{appuserId}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryAppuserServiceRecPageList"  parameterType="Map" resultType="com.didi.didims.pojo.AppuserServiceRec">
+		select 
+			t1.appuser_id AS appuserId,
+			t2.nickname AS appuserName,
+			t1.service_type_id AS serviceTypeId,
+			t3.type_name AS ServiceTypeName,
+			t1.create_time AS createTime
+		from 
+			didi_appuser_service_rec t1
+				left join didi_appuser_info t2 on t2.id = t1.appuser_id
+				left join didi_service_type_info t3 on t1.service_type_id = t3.id
+		<include refid="pageWhere"></include>
+		order by t1.appuser_id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryAppuserServiceRecPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_appuser_service_rec t1 
+				left join didi_appuser_info t2 on t2.id = t1.appuser_id
+				left join didi_service_type_info t3 on t1.service_type_id = t3.id
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryAppuserServiceRecList"  parameterType="Map" resultType="com.didi.didims.pojo.AppuserServiceRec">
+		select 
+			t1.appuser_id AS appuserId,
+			t1.service_type_id AS serviceTypeId,
+			t1.create_time AS createTime
+		from 
+			didi_appuser_service_rec t1
+		<where>
+			<if test=" appuserId != null and appuserId != '' ">
+				AND t1.appuser_id = #{appuserId}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+		</where>
+		order by t1.appuser_id desc
+	</select>
+	
+	<insert id="insertAppuserServiceRec" parameterType="com.didi.didims.pojo.AppuserServiceRec">
+		insert into
+		didi_appuser_service_rec
+		(
+				appuser_id,
+				service_type_id,
+				create_time
+		)
+		values
+		(
+				#{appuserId},
+				#{serviceTypeId},
+				#{createTime}
+		)
+	</insert>
+	
+	<update id="updateAppuserServiceRec" parameterType="com.didi.didims.pojo.AppuserServiceRec">
+		update
+			didi_appuser_service_rec
+		set
+			appuser_id = #{appuserId},
+			service_type_id = #{serviceTypeId},
+			create_time = #{createTime}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteAppuserServiceRec" parameterType="com.didi.didims.pojo.AppuserServiceRec">
+		delete from didi_appuser_service_rec where appuser_id = #{appuserId} and service_type_id = #{serviceTypeId}
+	</delete>
+	
+	<select id="checkRepeatService"  parameterType="Map" resultType="int">
+		select count(*) from didi_appuser_service_rec t1 
+		where appuser_id = #{appuserId}
+			and service_type_id in 
+			<foreach collection="serviceTypeIdList" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+</mapper>

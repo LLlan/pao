@@ -1,0 +1,506 @@
+[
+    {
+        "no": "common",
+        "title": "公用接口", 
+        "icon": "menu-icon fa fa-list-alt",
+        "children": [
+        ]
+    },
+    {
+        "no": "core",
+        "title": "核心模块", 
+        "icon": "menu-icon fa fa-list-alt",
+        "children": [{
+                "title": "app版本更新",
+                "cmd": "vapp.core.upload",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "APP登录",
+                "cmd": "vapp.core.login",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "APP异常捕获",
+                "cmd": "vapp.core.tryCatchException",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "业主游客登录",
+                "cmd": "vapp.core.guestLogin",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "业主游客登录验证码发送",
+                "cmd": "vapp.core.sendGuestLoginVerificationCode",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "注册验证码发送",
+                "cmd": "vapp.core.sendRegisterVerificationCode",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "忘记密码验证码发送",
+                "cmd": "vapp.core.sendForgetPasswordVerificationCode",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "忘记密码修改密码",
+                "cmd": "vapp.core.forgetPassword",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "修改密码",
+                "cmd": "vapp.core.updatePassword",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "注册业主用户",
+                "cmd": "vapp.core.register",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            },
+             {
+                "title": "完善个人信息",
+                "cmd": "vapp.core.perfectUserInfo",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,{
+                "title": "已存在账户关联小区信息",
+                "cmd": "vapp.core.referenceVillage",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "资讯分类",
+                "cmd": "vapp.core.queryInformationCategorys",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "资讯",
+                "cmd": "vapp.core.queryInformations",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+             ,
+             {
+                "title": "商家-检查版本",
+                "cmd": "vapp.core.checkNewVerisonByEbusiness",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+             ,
+             {
+                "title": "业主-检查版本",
+                "cmd": "vapp.core.checkNewVerisonByProprietor",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+             ,
+             {
+                "title": "物业-检查版本",
+                "cmd": "vapp.core.checkNewVerisonByEstate",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "查询单个收货地址",
+                "cmd": "vapp.core.queryAddressInfo",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "查询收货地址列表",
+                "cmd": "vapp.core.queryAddressInfoList",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "新增收货地址",
+                "cmd": "vapp.core.insertAddressInfo",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            
+            ,
+             {
+                "title": "更新收货地址",
+                "cmd": "vapp.core.updateAddressInfo",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            
+            ,
+             {
+                "title": "删除收货地址",
+                "cmd": "vapp.core.deleteAddress",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            ,
+             {
+                "title": "意见反馈",
+                "cmd": "vapp.core.insertFeedback",
+                "url": "/vapp/restapi/ebusiness/add.doc"
+            }
+            
+        ]
+    },
+    {
+        "no": "ebusiness-seller",
+        "title": "商城卖家", 
+        "icon": "menu-icon fa fa-list-alt",
+        "children": [
+            {
+                "title": "一键开店，创建店铺(不携带头像)",
+                "cmd": "vapp.ebusiness.createShop",
+                "url": "/vapp/restapi/ebusiness/shop/add.doc"
+            },
+            {
+                "title": "修改店铺基本信息(不包含头像)",
+                "cmd": "vapp.ebusiness.updateShop",
+                "url": "/vapp/restapi/ebusiness/shop/update.doc"
+            },
+            {
+                "title": "根据用户ID查询店铺",
+                "cmd": "vapp.ebusiness.findShopByMerchant",
+                "url": "/vapp/restapi/ebusiness/shop/findByMerchant.doc"
+            },
+            {
+                "title": "新增店铺商品(不携带商品图片)",
+                "cmd": "vapp.ebusiness.createProductSpu",
+                "url": "vapp/restapi/ebusiness/productSpu/add.doc"
+            },
+            {
+                "title": "修改店铺商品信息(不携带商品图片)",
+                "cmd": "vapp.ebusiness.updateProductSpu"
+            },
+            {
+                "title": "列表店铺下的所有商品",
+                "cmd": "vapp.ebusiness.listProductSpus"
+            },
+            {
+                "title": "(批量)修改商品状态",
+                "cmd": "vapp.ebusiness.updateProductSpuStatus"
+            },
+            {
+                "title": "查询单个商品详细信息",
+                "cmd": "vapp.ebusiness.findProductSpu"
+            }, 
+            {
+                "title": "店铺商品分类列表",
+                "cmd": "vapp.ebusiness.listShopProductCategories",
+                "url": "/vapp/restapi/ebusiness/shopProductCategory/list.doc"
+            },
+            {
+                "title": "增加店铺商品分类",
+                "cmd": "vapp.ebusiness.addShopProductCategory",
+                "url": "/vapp/restapi/ebusiness/shopProductCategory/add.doc"
+            },
+            {
+                "title": "(批量)修改店铺商品分类",
+                "cmd": "vapp.ebusiness.updateShopProductCategory",
+                "url": "/vapp/restapi/ebusiness/shopProductCategory/update.doc"
+            },
+            {
+                "title": "删除店铺商品分类",
+                "cmd": "vapp.ebusiness.deleteShopProductCategory",
+                "url": "/vapp/restapi/ebusiness/shopProductCategory/delete.doc"
+            },
+            {
+                "title": "当前卖家的商品订单列表",
+                "cmd": "vapp.ebusiness.listShopProductOrders"
+            },
+            {
+                "title": "查询单个订单详细信息",
+                "cmd": "vapp.ebusiness.loadProductOrder"
+            },
+            {
+                "title": "卖家修改订单的收货地址信息",
+                "cmd": "vapp.ebusiness.updateDeliveryAddress"
+            },
+            {
+                "title": "卖家对订单进行发货处理",
+                "cmd": "vapp.ebusiness.deliverProductOrder"
+            }       
+        ]
+    },
+    {
+        "no": "ebusiness-buyer",
+        "title": "商城买家", 
+        "icon": "menu-icon fa fa-list-alt",
+        "children": [
+            {
+                "title": "列表商品分类",
+                "cmd": "vapp.ebusiness.listProductCategories"
+            },
+            {
+                "title": "列表分类下的店铺",
+                "cmd": "vapp.ebusiness.listShops"
+            },
+            {
+                "title": "根据id获取店铺详细信息",
+                "cmd": "vapp.ebusiness.findShopById"
+            },
+            {
+                "title": "列表店铺下的分类",
+                "cmd": "vapp.ebusiness.listShopProductCategories"
+            },
+            {
+                "title": "列表店铺下的商品",
+                "cmd": "vapp.ebusiness.listProductSkus"
+            },
+            {
+                "title": "查询单个商品详细信息",
+                "cmd": "vapp.ebusiness.findProductSku"
+            },
+            {
+                "title": "买家在在店铺中的购物车商品列表",
+                "cmd": "vapp.ebusiness.listShoppingCartItems"
+            },
+            {
+                "title": "将商品加入购物车操作",
+                "cmd": "vapp.ebusiness.addShoppingCartItem"
+            },
+            {
+                "title": "修改购物车中商品的操作",
+                "cmd": "vapp.ebusiness.updateShoppingCartItem"
+            },
+            {
+                "title": "从购物车中删除商品",
+                "cmd": "vapp.ebusiness.deleteShoppingCartItem"
+            },
+            {
+                "title": "删除用户在某个店铺中的购物车数据",
+                "cmd": "vapp.ebusiness.deleteShopShoppingCart"
+            },
+            {
+                "title": "订单确认页面，订单结算",
+                "cmd": "vapp.ebusiness.confirmProductOrder"
+            },
+            {
+                "title": "买家提交订单",
+                "cmd": "vapp.ebusiness.submitProductOrder"
+            },
+            {
+                "title": "买家订单支付回调",
+                "cmd": "vapp.ebusiness.payProductOrder"
+            },
+            {
+                "title": "买家订单货到付款回调",
+                "cmd": "vapp.ebusiness.payOnDeliveryProductOrder"
+            },
+            {
+                "title": "买家确认收货",
+                "cmd": "vapp.ebusiness.receiptProductOrder"
+            },
+            {
+                "title": "买家取消订单(未发货之前的订单)",
+                "cmd": "vapp.ebusiness.cancelProductOrder"
+            },
+            {
+                "title": "买家删除订单",
+                "cmd": "vapp.ebusiness.deleteProductOrder"
+            },
+            {
+                "title": "当前买家的商品订单列表",
+                "cmd": "vapp.ebusiness.listProductOrders"
+            },
+            {
+                "title": "查询单个订单详细信息",
+                "cmd": "vapp.ebusiness.loadProductOrder"
+            },
+            {
+                "title": "修改订单基本信息",
+                "cmd": "vapp.ebusiness.updateProductOrder"
+            },
+            {
+                "title": "查看用户优惠券 ",
+                "cmd": "vapp.ebusiness.listUserShopCoupons",
+                "url": "/vapp/restapi/ebusiness/userCoupon/list.doc"
+            }, 
+            {
+                "title": "新增评论",
+                "cmd": "vapp.ebusiness.addComment"
+            },
+            {
+                "title": "新增客户关系",
+                "cmd": "vapp.ebusiness.addCustomer"
+            },
+            {
+                "title": "列表店铺的所有支持的支付方式",
+                "cmd": "vapp.ebusiness.listShopPayments"
+            }
+        ]
+    },
+    {
+        "no": "social",
+        "title": "邻里", 
+        "icon": "menu-icon fa fa-list-alt",
+        "url": "",
+        "children": [
+            {
+                "title": "业主发帖",
+                "cmd": "vapp.social.createInvitation"
+            },
+            {
+                "title": "业主修改帖子信息",
+                "cmd": "vapp.social.editInvitation"
+            },
+            {
+                "title": "获取帖子分类列表信息",
+                "cmd": "vapp.social.queryInvitationCateList"
+            },
+            {
+                "title": "获取帖子列表信息",
+                "cmd": "vapp.social.queryInvitationList"
+            },
+            {
+                "title": "获取帖子详情信息",
+                "cmd": "vapp.social.queryInvitationInfo"
+            },
+            {
+                "title": "删除帖子信息",
+                "cmd": "vapp.social.delInvitationInfo"
+            },
+            {
+                "title": "举报帖子信息",
+                "cmd": "vapp.social.addReport"
+            },
+            {
+                "title": "获取帖子评论列表",
+                "cmd": "vapp.social.queryCommentList"
+            },
+            {
+                "title": "根据物业ID分页查询该物业下的举报信息记录（分页）",
+                "cmd": "vapp.social.queryReportByPage"
+            },
+            {
+                "title": "添加帖子跟帖/评论信息",
+                "cmd": "vapp.social.addCommentInfo"
+            },
+            {
+                "title": "获取评论信息详情",
+                "cmd"  : "vapp.social.queryCommentInfo"
+            },
+            {
+                "title": "删除评论信息详情",
+                "cmd"  : "vapp.social.delCommentInfo"
+            },
+            {
+                "title": "物业端关闭帖子",
+                "cmd"  : "vapp.social.closeInvitation"
+            },
+            {
+
+                "title": "删除举报记录",
+                "cmd"  : "vapp.social.delReport"
+            },
+            {
+
+                "title": "添加贴吧操作",
+                "cmd"  : "vapp.social.addBarOperate"
+            },
+            {
+
+                "title": "取消贴吧操作",
+                "cmd"  : "vapp.social.canceldBarOperate"
+            }
+        ]
+    },
+    {
+        "no": "estate",
+        "title": "物业服务", 
+        "icon": "menu-icon fa fa-list-alt",
+        "url": "",
+        "children": [
+             {
+                "title": "获取所有公告分类",
+                "cmd": "vapp.estate.listAnnounceType"
+            },
+            {
+                "title": "根据分类分页获取公告内容",
+                "cmd": "vapp.estate.listAnnounceRecByPage"
+            },
+            {
+                "title": "根据公告ID查询公告详情",
+                "cmd": "vapp.estate.queryAnnounceDetail"
+            },
+            
+            {
+                "title": "分页获取办事指南列表",
+                "cmd": "vapp.estate.listGuideInfoByPage"
+            },
+            {
+                "title": "根据ID获取办事指南详细",
+                "cmd": "vapp.estate.queryGuideInfoDetail"
+            },
+            {
+                "title": "物业根据类型发布公告",
+                "cmd": "vapp.estate.publishAnnounce"
+            },
+            {
+                "title": "根据物业公司CODE查询可以选择的小区",
+                "cmd": "vapp.estate.queryAbleVillages"
+            },
+            {
+                "title": "查询小区里的楼栋信息",
+                "cmd": "vapp.estate.queryAbleHouses"
+            }
+            ,
+            {
+                "title": "查询楼栋下面的所有单元",
+                "cmd": "vapp.estate.queryAllPlate"
+            }
+            ,
+            {
+                "title": "根据单元查询全部住户信息",
+                "cmd": "vapp.estate.queryAllTenement"
+            }
+            ,
+            {
+                "title": "业主报修",
+                "cmd": "vapp.estate.createRepairRec"
+            },
+            {
+                "title": "业主查看我的报修",
+                "cmd": "vapp.estate.queryMyRepariRec"
+            },
+            {
+                "title": "根据ID查询报修记录明细",
+                "cmd": "vapp.estate.queryMyRepariDetail"
+            },
+            {
+                "title": "根据户号ID查询缴费信息",
+                "cmd": "vapp.estate.queryCommuntyPayInfoByTid"
+            },
+            {
+                "title": "缴费接口",
+                "cmd": "vapp.estate.communtyPaymentInfoMaintenance"
+            },
+            {
+                "title": "物业筛选小区后，根据小区查询报修记录(分页)",
+                "cmd": "vapp.estate.queryRepairRecByVillage"
+            },
+            {
+                "title": "物业管理维护业主提交的报修（包括更新状态，录入维修人员信息）",
+                "cmd": "vapp.estate.repairRecMaintenance"
+            },
+            {
+                "title": "根据小区ID查询该小区的停车费配置项选项",
+                "cmd": "vapp.estate.queryParkingInfoList"
+            },
+            {
+                "title": "根据物业ID查询物业支付方式",
+                "cmd": "vapp.estate.queryEstatePaymentById"
+            },
+            {
+                "title": "根据户号查询缴费记录(分页显示)",
+                "cmd": "vapp.estate.queryEstatePaymentRecByTenementId"
+            },
+            {
+                "title": "根据小区id查询小区的广告信息",
+                "cmd": "vapp.estate.queryEstateAdvertisements"
+            },
+            {
+                "title": "根据广告id查询广告详情并且记录浏览次数",
+                "cmd": "vapp.estate.queryEstateAdvInfo"
+            }
+        ]
+    }
+]

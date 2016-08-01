@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IRoleDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name like concat('%', #{name},'%') 
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+			<if test=" createBy != null and createBy != '' ">
+				AND t1.create_by = #{createBy}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryRolePageList"  parameterType="Map" resultType="com.didi.didims.pojo.Role">
+		select 
+			t1.id AS id,
+			t1.name AS name,
+			t1.sort AS sort,
+			t1.identity_code AS identityCode,
+			t1.create_by AS createBy
+		from 
+			didi_role_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryRolePageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_role_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryRoleList"  parameterType="Map" resultType="com.didi.didims.pojo.Role">
+		select 
+			t1.id AS id,
+			t1.name AS name,
+			t1.sort AS sort,
+			t1.identity_code AS identityCode,
+			t1.create_by AS createBy
+		from 
+			didi_role_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" identityCode != null and identityCode != '' ">
+				AND t1.identity_code = #{identityCode}
+			</if>
+			<if test=" createBy != null and createBy != '' ">
+				AND t1.create_by = #{createBy}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertRole" parameterType="com.didi.didims.pojo.Role" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		didi_role_info
+		(
+				name,
+				sort,
+				identity_code,
+				create_by
+		)
+		values
+		(
+				#{name},
+				#{sort},
+				#{identityCode},
+				#{createBy}
+		)
+	</insert>
+	
+	<update id="updateRole" parameterType="com.didi.didims.pojo.Role">
+		update
+			didi_role_info
+		set
+			name = #{name},
+			sort = #{sort},
+			identity_code = #{identityCode}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteRole" parameterType="com.didi.didims.pojo.Role">
+		delete from didi_role_info where id = #{id}
+	</delete>
+	
+	<insert id="insertRoleMenuFunctionRec" parameterType="Map">
+		insert into 
+			didi_role_menu_function_rec
+				(role_id, menu_function_id)
+		values
+		<foreach collection="menuFunctionIds" item="item" index="index" separator="," >  
+        (#{roleId},#{item})  
+    	</foreach> 
+	</insert>
+	
+	<delete id="deleteRoleMenuFunctionRec" parameterType="Map">
+		delete from didi_role_menu_function_rec where role_id = #{roleId}
+	</delete>
+	
+</mapper>

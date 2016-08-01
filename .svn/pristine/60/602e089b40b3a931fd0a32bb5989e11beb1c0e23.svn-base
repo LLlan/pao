@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.ISystemMessageDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" content != null and content != '' ">
+				AND t1.content = #{content}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" cTime1 != null and cTime1 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{cTime1}, '%Y-%m-%d')  ]]>
+			</if>
+			<if test=" cTime2 != null and cTime2 != '' ">
+				<![CDATA[ AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{cTime2}, '%Y-%m-%d') ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="querySystemMessagePageList"  parameterType="Map" resultType="com.didi.didims.pojo.SystemMessage">
+		select 
+			t1.id AS id,
+			t1.content AS content,
+			t1.tip_type AS tipType,
+			t1.create_user AS createUser,
+			t1.create_time AS createTime
+		from 
+			didi_system_message t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="querySystemMessagePageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_system_message t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="querySystemMessageList"  parameterType="Map" resultType="com.didi.didims.pojo.SystemMessage">
+		select 
+			t1.id AS id,
+			t1.content AS content,
+			t1.tip_type AS tipType,
+			t1.create_user AS createUser,
+			t1.create_time AS createTime
+		from 
+			didi_system_message t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" content != null and content != '' ">
+				AND t1.content = #{content}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertSystemMessage" parameterType="com.didi.didims.pojo.SystemMessage">
+		insert into
+		didi_system_message
+		(
+				content,
+				tip_type,
+				create_user,
+				create_time
+		)
+		values
+		(
+				#{content},
+				#{tipType},
+				#{createUser},
+				#{createTime}
+		)
+	</insert>
+	
+	<update id="updateSystemMessage" parameterType="com.didi.didims.pojo.SystemMessage">
+		update
+			didi_system_message
+		set
+			content = #{content},
+			create_user = #{createUser},
+			create_time = #{createTime}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteSystemMessage" parameterType="com.didi.didims.pojo.SystemMessage">
+		delete from didi_system_message where id = #{id}
+	</delete>
+	
+	<insert id="insertTipInfoList" parameterType="java.util.List">
+		insert into didi_tip_info
+		(
+			type,
+			status,
+			create_time,
+			user_id,
+			content,
+			order_id
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+		(
+			#{item.type},
+			#{item.status},
+			#{item.createTime},
+			#{item.appUser.id},
+			#{item.content},
+			#{item.orderId}
+		)
+		</foreach>
+	</insert>
+</mapper>

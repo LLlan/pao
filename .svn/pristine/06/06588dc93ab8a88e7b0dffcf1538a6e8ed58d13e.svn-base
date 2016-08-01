@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IHomemakingDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" account != null and account != '' ">
+				AND t1.account like '%${account}%'
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name like '%${name}%'
+			</if>
+			<if test=" homemakingGrade != null and homemakingGrade != '' ">
+				AND t1.homemaking_grade = #{homemakingGrade}
+			</if>
+			<if test=" phoneNumber != null and phoneNumber != '' ">
+				AND t1.phone_number = #{phoneNumber}
+			</if>
+			<if test=" introduction != null and introduction != '' ">
+				AND t1.introduction = #{introduction}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryHomemakingPageList"  parameterType="Map" resultType="com.didi.didims.pojo.Homemaking">
+		select 
+			t1.id AS id,
+			t1.account AS account,
+			t1.name AS name,
+			t1.logo_file AS logoFile,
+			t1.homemaking_grade AS homemakingGrade,
+			t1.phone_number AS phoneNumber,
+			t1.introduction AS introduction,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status,
+			t1.balance AS balance
+		from 
+			didi_homemaking_info t1
+		<include refid="pageWhere"></include>
+		order by id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryHomemakingPageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_homemaking_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryHomemakingList"  parameterType="Map" resultType="com.didi.didims.pojo.Homemaking">
+		select 
+			t1.id AS id,
+			t1.account AS account,
+			t1.name AS name,
+			t1.logo_file AS logoFile,
+			t1.homemaking_grade AS homemakingGrade,
+			t1.phone_number AS phoneNumber,
+			t1.introduction AS introduction,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status,
+			t1.balance AS balance
+		from 
+			didi_homemaking_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" account != null and account != '' ">
+				AND t1.account = #{account}
+			</if>
+			<if test=" name != null and name != '' ">
+				AND t1.name = #{name}
+			</if>
+			<if test=" homemakingGrade != null and homemakingGrade != '' ">
+				AND t1.homemaking_grade = #{homemakingGrade}
+			</if>
+			<if test=" phoneNumber != null and phoneNumber != '' ">
+				AND t1.phone_number = #{phoneNumber}
+			</if>
+			<if test=" introduction != null and introduction != '' ">
+				AND t1.introduction = #{introduction}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertHomemaking" useGeneratedKeys="true" keyProperty="id" parameterType="com.didi.didims.pojo.Homemaking">
+		insert into
+		didi_homemaking_info
+		(
+				account,
+				name,
+				logo_file,
+				homemaking_grade,
+				phone_number,
+				introduction,
+				create_time,
+				create_user,
+				update_time,
+				update_user,
+				status,
+				balance
+		)
+		values
+		(
+				#{account},
+				#{name},
+				#{logoFile},
+				#{homemakingGrade},
+				#{phoneNumber},
+				#{introduction},
+				#{createTime},
+				#{createUser},
+				#{updateTime},
+				#{updateUser},
+				#{status},
+				#{balance}
+		)
+	</insert>
+	
+	<update id="updateHomemaking" parameterType="com.didi.didims.pojo.Homemaking">
+		update
+			didi_homemaking_info
+		set
+			name = #{name},
+			<if test=" logoFile != null and logoFile != '' ">
+				logo_file = #{logoFile},
+			</if>
+			homemaking_grade = #{homemakingGrade},
+			phone_number = #{phoneNumber},
+			introduction = #{introduction},
+			update_time = #{updateTime},
+			update_user = #{updateUser},
+			balance = #{balance}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteHomemaking" parameterType="com.didi.didims.pojo.Homemaking">
+		delete from didi_homemaking_info where id = #{id}
+	</delete>
+</mapper>

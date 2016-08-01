@@ -1,0 +1,63 @@
+### set log levels ###
+log4j.rootLogger = DEBUG, SYSTEM_INFO, SYSTEM_ERROR
+log4j.appender.SYSTEM_INFO = org.apache.log4j.RollingFileAppender
+log4j.appender.SYSTEM_INFO.File = ${catalina.base}/logs/SYSTEM_INFO.log
+log4j.appender.SYSTEM_INFO.Append = true
+log4j.appender.SYSTEM_INFO.Threshold = INFO
+log4j.appender.SYSTEM_INFO.MaxFileSize = 5MB
+log4j.appender.SYSTEM_INFO.MaxBackupIndex = 10
+log4j.appender.SYSTEM_INFO.layout = org.apache.log4j.PatternLayout
+log4j.appender.SYSTEM_INFO.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n
+
+log4j.appender.SYSTEM_ERROR = org.apache.log4j.RollingFileAppender
+log4j.appender.SYSTEM_ERROR.File = ${catalina.base}/logs/SYSTEM_ERROR.log
+log4j.appender.SYSTEM_ERROR.Append = true
+log4j.appender.SYSTEM_ERROR.Threshold = ERROR
+log4j.appender.SYSTEM_ERROR.MaxFileSize = 5MB
+log4j.appender.SYSTEM_ERROR.MaxBackupIndex = 10
+log4j.appender.SYSTEM_ERROR.layout = org.apache.log4j.PatternLayout
+log4j.appender.SYSTEM_ERROR.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n
+
+#MANAGE busin log info
+log4j.logger.BUSIN_MANAGE = INFO, BUSIN_MANAGE_INFO, BUSIN_MANAGE_ERROR
+#info
+log4j.appender.BUSIN_MANAGE_INFO = org.apache.log4j.RollingFileAppender
+log4j.appender.BUSIN_MANAGE_INFO.File = ${catalina.base}/logs/BUSIN_MANAGE_INFO.log
+log4j.appender.BUSIN_MANAGE_INFO.Append = true
+log4j.appender.BUSIN_MANAGE_INFO.Threshold = INFO
+log4j.appender.BUSIN_MANAGE_INFO.MaxFileSize = 5MB
+log4j.appender.BUSIN_MANAGE_INFO.MaxBackupIndex = 10
+log4j.appender.BUSIN_MANAGE_INFO.layout = org.apache.log4j.PatternLayout
+log4j.appender.BUSIN_MANAGE_INFO.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n
+
+#error
+log4j.appender.BUSIN_MANAGE_ERROR = org.apache.log4j.RollingFileAppender
+log4j.appender.BUSIN_MANAGE_ERROR.File = ${catalina.base}/logs/BUSIN_MANAGE_ERROR.log
+log4j.appender.BUSIN_MANAGE_ERROR.Append = true
+log4j.appender.BUSIN_MANAGE_ERROR.Threshold = ERROR
+log4j.appender.BUSIN_MANAGE_ERROR.MaxFileSize = 5MB
+log4j.appender.BUSIN_MANAGE_ERROR.MaxBackupIndex = 10
+log4j.appender.BUSIN_MANAGE_ERROR.layout = org.apache.log4j.PatternLayout
+log4j.appender.BUSIN_MANAGE_ERROR.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n
+
+#app busin log info
+log4j.logger.BUSIN_HOUSEKEEPING = INFO, BUSIN_HOUSEKEEPING_INFO, BUSIN_HOUSEKEEPING_ERROR
+#info
+log4j.appender.BUSIN_HOUSEKEEPING_INFO = org.apache.log4j.RollingFileAppender
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.File = ${catalina.base}/logs/BUSIN_HOUSEKEEPING_INFO.log
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.Append = true
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.Threshold = INFO
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.MaxFileSize = 5MB
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.MaxBackupIndex = 10
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.layout = org.apache.log4j.PatternLayout
+log4j.appender.BUSIN_HOUSEKEEPING_INFO.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n
+
+#error
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR = org.apache.log4j.RollingFileAppender
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.File = ${catalina.base}/logs/BUSIN_HOUSEKEEPING_ERROR.log
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.Append = true
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.Threshold = ERROR
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.MaxFileSize = 5MB
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.MaxBackupIndex = 10
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.layout = org.apache.log4j.PatternLayout
+log4j.appender.BUSIN_HOUSEKEEPING_ERROR.layout.ConversionPattern =%-d{yyyy-MM-dd HH\:mm\:ss}[ %t\:%r ]-[ %p ] %m%n

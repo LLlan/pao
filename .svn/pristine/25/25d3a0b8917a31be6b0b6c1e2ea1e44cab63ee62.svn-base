@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IServiceTypeDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" typeName != null and typeName != '' ">
+				AND t1.type_name like '%${typeName}%'
+			</if>
+			<if test=" serviceStandard != null and serviceStandard != '' ">
+				AND t1.service_standard = #{serviceStandard}
+			</if>
+			<if test=" logoFile != null and logoFile != '' ">
+				AND t1.logo_file = #{logoFile}
+			</if>
+			<if test=" picUrl != null and picUrl != '' ">
+				AND t1.pic_url = #{picUrl}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryServiceTypePageList"  parameterType="Map" resultType="com.didi.didims.pojo.ServiceType">
+		select 
+			t1.id AS id,
+			t1.type_name AS typeName,
+			t1.service_standard AS serviceStandard,
+			t1.logo_file AS logoFile,
+			t1.pic_url AS picUrl,
+			t1.sort AS sort,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.status AS status
+		from 
+			didi_service_type_info t1
+		<include refid="pageWhere"></include>
+		order by t1.sort
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryServiceTypePageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_service_type_info t1 
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryServiceTypeList"  parameterType="Map" resultType="com.didi.didims.pojo.ServiceType">
+		select 
+			t1.id AS id,
+			t1.type_name AS typeName,
+			t1.service_standard AS serviceStandard,
+			t1.logo_file AS logoFile,
+			t1.pic_url AS picUrl,
+			t1.sort AS sort,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.status AS status
+		from 
+			didi_service_type_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" typeName != null and typeName != '' ">
+				AND t1.type_name = #{typeName}
+			</if>
+			<if test=" serviceStandard != null and serviceStandard != '' ">
+				AND t1.service_standard = #{serviceStandard}
+			</if>
+			<if test=" logoFile != null and logoFile != '' ">
+				AND t1.logo_file = #{logoFile}
+			</if>
+			<if test=" picUrl != null and picUrl != '' ">
+				AND t1.pic_url = #{picUrl}
+			</if>
+			<if test=" sort != null and sort != '' ">
+				AND t1.sort = #{sort}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+		order by t1.sort
+	</select>
+	
+	<insert id="insertServiceType" parameterType="com.didi.didims.pojo.ServiceType">
+		insert into
+		didi_service_type_info
+		(
+				type_name,
+				service_standard,
+				logo_file,
+				pic_url,
+				sort,
+				create_time,
+				create_user,
+				status
+		)
+		values
+		(
+				#{typeName},
+				#{serviceStandard},
+				#{logoFile},
+				#{picUrl},
+				#{sort},
+				#{createTime},
+				#{createUser},
+				#{status}
+		)
+	</insert>
+	
+	<update id="updateServiceType" parameterType="com.didi.didims.pojo.ServiceType">
+		update
+			didi_service_type_info
+		set
+			type_name = #{typeName},
+			service_standard = #{serviceStandard},
+			<if test=" logoFile != null and logoFile != '' ">
+				logo_file = #{logoFile},
+			</if>
+			<if test=" picUrl != null and picUrl != '' ">
+				pic_url = #{picUrl},
+			</if>
+			sort = #{sort}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteServiceType" parameterType="com.didi.didims.pojo.ServiceType">
+		delete from didi_service_type_info where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IHomemakingPriceDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	
+	<!-- 分页查询 -->
+	<select id="queryHomemakingPricePageList"  parameterType="Map" resultType="com.didi.didims.pojo.HomemakingPrice">
+		select 
+			t1.id AS id,
+			t1.homemaking_service_id AS homemakingServiceId,
+			t2.id AS serviceDescriptionId,
+			t1.price AS price,
+			t1.remarks AS remarks,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status,
+			t2.description AS serviceDescriptionName
+		from 
+			didi_service_description t2
+				left join didi_homemaking_price_info t1 
+					on t1.service_description_id = t2.id
+						and t1.homemaking_service_id = #{homemakingServiceId} 
+		where 
+			t2.service_type_id = #{serviceTypeId}
+			<if test=" descriptionStatus != null and descriptionStatus != '' ">
+				AND t2.status = #{descriptionStatus}
+			</if>
+		order by t2.sort
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryHomemakingPricePageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_service_description t2
+				left join didi_homemaking_price_info t1 
+					on t1.service_description_id = t2.id
+						and t1.homemaking_service_id = #{homemakingServiceId} 
+		where 
+			t2.service_type_id = #{serviceTypeId}
+			<if test=" descriptionStatus != null and descriptionStatus != '' ">
+				AND t2.status = #{descriptionStatus}
+			</if>
+	</select>
+	
+	<select id="queryHomemakingPriceList"  parameterType="Map" resultType="com.didi.didims.pojo.HomemakingPrice">
+		select 
+			t1.id AS id,
+			t1.homemaking_service_id AS homemakingServiceId,
+			t1.service_description_id AS serviceDescriptionId,
+			t1.price AS price,
+			t1.remarks AS remarks,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status
+		from 
+			didi_homemaking_price_info t1
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" homemakingServiceId != null and homemakingServiceId != '' ">
+				AND t1.homemaking_service_id = #{homemakingServiceId}
+			</if>
+			<if test=" serviceDescriptionId != null and serviceDescriptionId != '' ">
+				AND t1.service_description_id = #{serviceDescriptionId}
+			</if>
+			<if test=" price != null and price != '' ">
+				AND t1.price = #{price}
+			</if>
+			<if test=" remarks != null and remarks != '' ">
+				AND t1.remarks = #{remarks}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+		order by id
+	</select>
+	
+	<insert id="insertHomemakingPrice" parameterType="com.didi.didims.pojo.HomemakingPrice">
+		insert into
+		didi_homemaking_price_info
+		(
+				homemaking_service_id,
+				service_description_id,
+				price,
+				remarks,
+				create_time,
+				create_user,
+				status
+		)
+		values
+		(
+				#{homemakingServiceId},
+				#{serviceDescriptionId},
+				#{price},
+				#{remarks},
+				#{createTime},
+				#{createUser},
+				#{status}
+		)
+	</insert>
+	
+	<update id="updateHomemakingPrice" parameterType="com.didi.didims.pojo.HomemakingPrice">
+		update
+			didi_homemaking_price_info
+		set
+			price = #{price},
+			remarks = #{remarks},
+			update_time = #{updateTime},
+			update_user = #{updateUser}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteHomemakingPrice" parameterType="com.didi.didims.pojo.HomemakingPrice">
+		delete from didi_homemaking_price_info where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.didi.didims.dao.IHomemakingServiceDao">
+	
+	<sql id = "limit">
+		limit #{page.pageStart}, #{page.pageSize}
+	</sql>
+
+	<!-- 分页查询公共条件  -->
+    <sql id="pageWhere">
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" homemakingId != null and homemakingId != '' ">
+				AND t1.homemaking_id = #{homemakingId}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+			<if test=" serviceTypeName != null and serviceTypeName != '' ">
+				AND t2.type_name like '%${serviceTypeName}%'
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="queryHomemakingServicePageList"  parameterType="Map" resultType="com.didi.didims.pojo.HomemakingService">
+		select 
+			t1.id AS id,
+			t1.homemaking_id AS homemakingId,
+			t1.service_type_id AS serviceTypeId,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status,
+			t2.type_name AS serviceTypeName
+		from 
+			didi_homemaking_service_info t1
+				left join didi_service_type_info t2 on t1.service_type_id = t2.id
+		<include refid="pageWhere"></include>
+		order by t1.id desc
+		<include refid="limit"></include>
+	</select>
+	
+	<select id="queryHomemakingServicePageListCount"  parameterType="Map" resultType="int">
+		select 
+			count(*)
+		from 
+			didi_homemaking_service_info t1 
+				left join didi_service_type_info t2 on t1.service_type_id = t2.id
+		<include refid="pageWhere"></include>
+	</select>
+	
+	<select id="queryHomemakingServiceList"  parameterType="Map" resultType="com.didi.didims.pojo.HomemakingService">
+		select 
+			t1.id AS id,
+			t1.homemaking_id AS homemakingId,
+			t1.service_type_id AS serviceTypeId,
+			t1.create_time AS createTime,
+			t1.create_user AS createUser,
+			t1.update_time AS updateTime,
+			t1.update_user AS updateUser,
+			t1.status AS status,
+			t2.type_name AS serviceTypeName
+		from 
+			didi_homemaking_service_info t1
+				left join didi_service_type_info t2 on t1.service_type_id = t2.id
+		<where>
+			<if test=" id != null and id != '' ">
+				AND t1.id = #{id}
+			</if>
+			<if test=" homemakingId != null and homemakingId != '' ">
+				AND t1.homemaking_id = #{homemakingId}
+			</if>
+			<if test=" serviceTypeId != null and serviceTypeId != '' ">
+				AND t1.service_type_id = #{serviceTypeId}
+			</if>
+			<if test=" createTime != null and createTime != '' ">
+				AND t1.create_time = #{createTime}
+			</if>
+			<if test=" createUser != null and createUser != '' ">
+				AND t1.create_user = #{createUser}
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				AND t1.update_time = #{updateTime}
+			</if>
+			<if test=" updateUser != null and updateUser != '' ">
+				AND t1.update_user = #{updateUser}
+			</if>
+			<if test=" status != null and status != '' ">
+				AND t1.status = #{status}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<insert id="insertHomemakingService" parameterType="com.didi.didims.pojo.HomemakingService">
+		insert into
+		didi_homemaking_service_info
+		(
+				homemaking_id,
+				service_type_id,
+				create_time,
+				create_user,
+				update_time,
+				update_user,
+				status
+		)
+		values
+		(
+				#{homemakingId},
+				#{serviceTypeId},
+				#{createTime},
+				#{createUser},
+				#{updateTime},
+				#{updateUser},
+				#{status}
+		)
+	</insert>
+	
+	<update id="updateHomemakingService" parameterType="com.didi.didims.pojo.HomemakingService">
+		update
+			didi_homemaking_service_info
+		set
+			homemaking_id = #{homemakingId},
+			service_type_id = #{serviceTypeId},
+			create_time = #{createTime},
+			create_user = #{createUser},
+			update_time = #{updateTime},
+			update_user = #{updateUser}
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteHomemakingService" parameterType="com.didi.didims.pojo.HomemakingService">
+		delete from didi_homemaking_service_info where id = #{id}
+	</delete>
+	
+	<select id="checkRepeatType"  parameterType="Map" resultType="int">
+		select count(*) from didi_homemaking_service_info 
+		where homemaking_id = #{homemakingId}
+			and service_type_id in
+			<foreach collection="serviceTypeIdList" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+</mapper>

@@ -1,0 +1,13 @@
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc\:mysql\://192.168.14.11\:3306/didi
+jdbc.username=dba
+jdbc.password=dba
+jdbc.initialSize=20
+jdbc.maxActive=200
+jdbc.minIdle=20
+jdbc.maxIdle=80
+jdbc.maxWait=9000
+jdbc.defaultAutoCommit=true
+jdbc.validationQuery=select 1 
+jdbc.removeAbandoned=true
+jdbc.removeAbandonedTimeout=180

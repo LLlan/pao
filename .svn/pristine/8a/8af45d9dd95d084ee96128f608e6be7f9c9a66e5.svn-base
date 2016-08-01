@@ -1,0 +1,122 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,input{ 
+      margin:0;
+      padding:0;
+	  }
+
+body{
+	   background:url(../img/BG.png);
+	   background-position: center;
+       background-repeat: no-repeat;
+       background-attachment: fixed;
+      }
+
+.anchor-point{ 
+            position:absolute;
+			left:50%;
+			top:50%;
+			width:1px;
+			height:1px;
+			
+              }
+			  
+.loginbox{
+	      width:370px;
+		  height:480px;
+		  margin-left:-185px;
+		  margin-top:-240px;
+		  }
+		  
+.logo{ 
+     margin-left:131px;
+	 border-radius:16px;
+	  }
+	
+.shadow
+    {
+		   -webkit-box-shadow:0px 4px 5px 0px rgba(0, 0, 0, 0.1);
+		  -moz-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);
+		   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);
+	}
+	
+	
+
+	
+	
+	
+.login-out{
+	     width:370px;
+		 height:307px;
+		 background:#FFF;
+		 margin-top:55px;
+		 border-radius:5px;
+		 position:relative;
+		  }	
+	
+		
+.username{
+	     border:#e7e7e7 2px solid;
+		 width: 238px;
+         height: 38px;
+		 border-radius:5px;
+		 margin-top:66px;
+		 margin-left:45px;
+		 outline:none;
+		 background:url(../img/username.png) no-repeat;
+		 padding-left:40px;
+		 }
+
+.password{
+	     border:#e7e7e7 2px solid;
+		 width: 238px;
+         height: 38px;
+		 border-radius:5px;
+		 margin-top:36px;
+		 margin-left:45px;
+		 outline:none;
+		 background:url(../img/password.png) no-repeat;
+		 padding-left:40px;
+		 }
+		 
+.login{
+	     
+		 width: 278px;
+         height: 38px;
+		 background:#ff6e6e;
+		 border-radius:5px;
+		 margin-top:36px;
+		 margin-left:45px;
+		 outline:none;
+		 border:none;
+		 color:#FFF;
+		 font-size:14px;
+		 font-family:"微软雅黑"
+		 
+		 }
+
+.login:hover{
+	 background:#dd5e5e;
+	 cursor:pointer;
+	 }
+
+.text-style{
+	     color:#333333;
+		 font-size:16px;
+		 font-weight:500;
+		 font-family:"微软雅黑"
+	
+	
+	}
+	
+	
+	
+.info{ 
+       position:absolute;
+	    left:45px;
+		 top:25px;
+		 width: 280px;
+		 text-align:left;
+		 color:#F00;}	
+	
