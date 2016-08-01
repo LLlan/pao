@@ -11,7 +11,11 @@ import com.baidu.ueditor.define.State;
 import com.baidu.ueditor.hunter.FileManager;
 import com.baidu.ueditor.hunter.ImageHunter;
 import com.baidu.ueditor.upload.Uploader;
-
+/**
+ * 撒旦撒旦
+ * @author Administrator
+ *
+ */
 public class ActionEnter {
 	
 	private HttpServletRequest request = null;
